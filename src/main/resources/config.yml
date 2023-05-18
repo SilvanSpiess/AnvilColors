@@ -24,6 +24,7 @@ italic: o
 underlined: n
 strikethrough: m
 reset: r
+obf: k
 #custom colors sitch out key and value, if you want differetn colors
 #please do not add more colors or remove the existing ones
 gold: FFAA00

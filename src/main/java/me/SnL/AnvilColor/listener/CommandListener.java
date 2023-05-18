@@ -72,8 +72,8 @@ public class CommandListener implements CommandExecutor {
     }
     public Component getDisplayText6() {        
         var mm = MiniMessage.miniMessage();
-        //Component parsed = mm.deserialize("<reset><"+config.getColorDict().get("bold")+">"+"bold"+"</"+config.getColorDict().get("bold")+"> " + "<"+config.getColorDict().get("italic")+">"+"italic"+"</"+config.getColorDict().get("italic")+"> " + "<"+config.getColorDict().get("underlined")+">"+"underlined"+"</"+config.getColorDict().get("underlined")+"> " + "<"+config.getColorDict().get("strikethrough")+">"+"strikethrough"+"</"+config.getColorDict().get("strikethrough")+">");
-        Component parsed = mm.deserialize("<reset><b>"+"bold"+"</b> " + "<i>"+"italic"+"</i> " + "<u>"+"underlined"+"</u> " + "<st>"+"strikethrough"+"</st>");
+        //Component parsed = mm.deserialize("<r><b>"+"bold"+"</b> " + "<i>"+"italic"+"</i> " + "<u>"+"underlined"+"</u> " + "<st>"+"strikethrough"+"</st>" + "<r>");
+        Component parsed = mm.deserialize("<reset><b>bold</b> " + "<i>italic</i> " + "<u>underlined</u> " + "<st>strikethrough</st> " + "<reset><i>obf-></i> <obf>obf</obf>"); 
         
         return parsed;        
     }
