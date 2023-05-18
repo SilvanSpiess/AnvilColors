@@ -1,0 +1,12 @@
+name: AnvilColor
+author: Sil and Lonne
+main: me.SnL.AnvilColor.AnvilColor
+description: Allows players to color Items names when naming them
+version: 1.0.1+mc1.19.3
+api-version: 1.19
+
+commands:
+  ColorCodes:
+    description: Showing all Colorcodes
+    aliases: [colorcodes]
+    usage: do /colorcode for all usages

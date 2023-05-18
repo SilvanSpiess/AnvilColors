@@ -1,0 +1,33 @@
+#default and custom colors
+#any custom color can be added with the same namestructure and an RGB value
+
+#default colors, all the wool colors in the game
+yellow: f8c627
+orange: f07613
+red: a12722 
+purple: 792aac    
+magenta: bd44b3    
+pink: ed8dac    
+blue: 35399d    
+cyan: 158991    
+light_blue: 3aafd9    
+green: 546d1b
+lime: 70b919    
+brown: 724728
+black: 141519    
+gray: 555555
+light_gray: 8e8e86
+white: e9ecec
+#fonts, all default fonts of Minecraft
+bold: l
+italic: o
+underlined: n
+strikethrough: m
+reset: r
+#custom colors sitch out key and value, if you want differetn colors
+#please do not add more colors or remove the existing ones
+gold: FFAA00
+silver: C0C0C0
+aqua: 55FFFF
+
+
