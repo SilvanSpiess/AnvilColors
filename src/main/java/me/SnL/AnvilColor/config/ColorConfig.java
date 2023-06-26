@@ -212,7 +212,8 @@ public class ColorConfig {
         return "x" + colorDict.get(colorTag.substring(1, colorTag.length()-1));
     }
     public Boolean isFont(String colorTag) {
-        if(colorTag.equals("<bold>") || colorTag.equals("<italic>")  || colorTag.equals("<underlined>") || colorTag.equals("<strikethrough>") || colorTag.equals("<reset>") || colorTag.equals("<obf>")){
+        if(colorTag.equals("<bold>") || colorTag.equals("<italic>")  || colorTag.equals("<underlined>") || colorTag.equals("<strikethrough>") || colorTag.equals("<reset>") || colorTag.equals("<obf>") || 
+        colorTag.equals("<l>") || colorTag.equals("<o>") || colorTag.equals("<n>") || colorTag.equals("<m>")  || colorTag.equals("<r>") || colorTag.equals("<k>")){
             return colorDict.containsKey(colorTag.substring(1, colorTag.length()-1));
         }
         return false;
