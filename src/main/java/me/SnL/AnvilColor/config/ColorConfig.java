@@ -12,29 +12,31 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Logger;
 
 public class ColorConfig {    
     private final AnvilColor plugin;
-    private final Logger logger;
     List<String> defaultParams;
     List<String> customParams;
+    String textBlack = "\u001B[30m";
+    String textRed = "\u001B[31m";
+    String textGreen = "\u001B[32m";
+    String textYellow  = "\u001B[33m";
+    String textReset  = "\u001B[0m";
 
     public ColorConfig(AnvilColor plugin){
         this.plugin = plugin;
-        logger = plugin.getLogger();
         try {
             matchConfigParams();
         }
         catch (IOException | InvalidConfigurationException e) {
-            logger.severe(e.getMessage());
+            System.out.println(textRed + e.getMessage() + textReset);
         }
         if (new File(plugin.getDataFolder(), "config.yml").exists()) {loadDefaultConfig();loadCustomConfig();}
         else loadDefaultConfig();
     }
 
     private void loadCustomConfig() {
-        logger.info("Loading custom config");
+        System.out.println("Loading custom config");
         final FileConfiguration configFile = new YamlConfiguration();
         final FileConfiguration defaultConfig = new YamlConfiguration();
         try {
@@ -45,23 +47,22 @@ public class ColorConfig {
             for(String s : customParams){
                 colorDict.put(s, configFile.getString(s));
             }
-            for (Map.Entry<String, String> entry : colorDict.entrySet()) {
+            /* for (Map.Entry<String, String> entry : colorDict.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                //logger.info(key + " : " + value);
-            }
+            } */
             
         } //catch (IOException | InvalidConfigurationException e) {
             catch (IllegalArgumentException | IOException | InvalidConfigurationException ignored){
             //if it fails it reverst to the default config
-            logger.severe("Failed to parse custom config");
-            logger.warning("Reverting to default config");
+            System.out.println(textRed + "Failed to parse custom config" + textReset);
+            System.out.println("Reverting to default config" + textReset);
             loadDefaultConfig();
         }
     }
 
     private void loadDefaultConfig() {
-        logger.info("Loading default config");
+        System.out.println("Loading default config");
         final FileConfiguration defaultConfig = new YamlConfiguration();
         try{
             defaultConfig.load(new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("config.yml"))));
@@ -71,8 +72,8 @@ public class ColorConfig {
                 colorDict.put(s, defaultConfig.getString(s));
             }
         } catch (IOException | InvalidConfigurationException e) {
-            logger.severe("Failed to parse custom config");
-            logger.warning("Reverting to default config");
+            System.out.println(textRed + "Failed to parse custom config" + textReset);
+            System.out.println(textYellow + "Reverting to default config" + textReset);
             loadDefaultConfig();
         }
     }
@@ -105,10 +106,10 @@ public class ColorConfig {
 
         //and compares them
         if(customParams.equals(defaultParams)) {
-            logger.info("Custom config is up-to-date");
+            System.out.println("Custom config is up-to-date");
         }
         else { //if they don't match, it throws a warning and tries to update the custom config.yml to contain the missing parameters.
-            logger.warning("Custom config is missing some parameters\nTrying to reconstruct config.yml keeping current config values");
+        System.out.println(textYellow + "Custom config is missing some parameters\nTrying to reconstruct config.yml keeping current config values" + textReset);
             BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("config.yml")));
             List<String> lines = new ArrayList<>();
             br.lines().forEach(line -> { //checks for each parameter in the default config, to find the corresponding one in the custom config
@@ -143,37 +144,6 @@ public class ColorConfig {
             bw.flush();
             bw.close();
         }
-        /*else { //if they don't match, it throws a warning and tries to update the custom config.yml to contain the missing parameters.
-            logger.warning("Custom config is missing some parameters\nTrying to reconstruct config.yml keeping current config values");
-            InputStreamReader isr = new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("config.yml"));
-            BufferedReader br = new BufferedReader(isr);
-            List<String> lines = new ArrayList<>();
-            br.lines().forEach(line -> { //checks for each parameter in the default config, to find the corresponding one in the custom config
-                boolean found = false;
-                for(String k : customParams) {
-                    if(line.matches("\\s*" + k + ".*")) {
-                        found = true;
-                        lines.add(line.substring(0,line.indexOf(k) + k.length() + 1) + " " + customValues.get(k).toString());
-                        break;
-                    }
-                } //if it can't find a config that should be there, it adds it to the list 'lines', which will later add it to the real file.
-                if(!found)
-                    lines.add(line);
-
-            });
-            isr.close();
-            br.close();
-
-            //it adds the missing parameters to the custom config
-            FileWriter fw = new FileWriter(configFile);
-            BufferedWriter bw = new BufferedWriter(fw);
-            for(String line : lines) {
-                bw.write(line);
-                bw.write("\n");
-            }
-            bw.flush();
-            bw.close();
-        }*/
     }
 
     public void reloadConfig() {
@@ -181,7 +151,7 @@ public class ColorConfig {
             matchConfigParams();
         }
         catch (IOException | InvalidConfigurationException e) {
-            logger.severe(e.getMessage());
+            System.out.println(textRed + e.getMessage() + textReset);
         }
         loadCustomConfig();
     }
@@ -212,14 +182,18 @@ public class ColorConfig {
         return "x" + colorDict.get(colorTag.substring(1, colorTag.length()-1));
     }
     public Boolean isFont(String colorTag) {
-        if(colorTag.equals("<bold>") || colorTag.equals("<italic>")  || colorTag.equals("<underlined>") || colorTag.equals("<strikethrough>") || colorTag.equals("<reset>") || colorTag.equals("<obf>") || 
-        colorTag.equals("<l>") || colorTag.equals("<o>") || colorTag.equals("<n>") || colorTag.equals("<m>")  || colorTag.equals("<r>") || colorTag.equals("<k>")){
+        if(colorTag.equals("<bold>") || colorTag.equals("<italic>")  || colorTag.equals("<underlined>") || colorTag.equals("<strikethrough>") || colorTag.equals("<reset>") || colorTag.equals("<obf>")){
             return colorDict.containsKey(colorTag.substring(1, colorTag.length()-1));
         }
         return false;
     }
+    public Boolean isShortFont(String colorTag) {
+        if(colorTag.equals("<l>") || colorTag.equals("<o>") || colorTag.equals("<n>") || colorTag.equals("<m>")  || colorTag.equals("<r>") || colorTag.equals("<k>")){
+            return colorDict.containsValue(colorTag.substring(1, colorTag.length()-1));
+        }
+        return false;
+    }
     public String getFont(String colorTag) {
-        //logger.info(colorDict.get(colorTag.substring(1, colorTag.length()-1)));
         return colorDict.get(colorTag.substring(1, colorTag.length()-1));
     }    
 }

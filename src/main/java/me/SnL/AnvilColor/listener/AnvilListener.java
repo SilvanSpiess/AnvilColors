@@ -1,8 +1,5 @@
 package me.SnL.AnvilColor.listener;
-import me.SnL.AnvilColor.AnvilColor;
 import me.SnL.AnvilColor.config.ColorConfig;
-
-import java.util.logging.Logger;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,12 +7,8 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 
 public class AnvilListener implements Listener {
     ColorConfig config;
-    AnvilColor plugin;
-    private final Logger logger;
-    public AnvilListener(AnvilColor plugin, ColorConfig config){
+    public AnvilListener(ColorConfig config){
         this.config = config;
-        this.plugin = plugin;
-        logger = plugin.getLogger();
     }
 
     @EventHandler
@@ -40,7 +33,7 @@ public class AnvilListener implements Listener {
                         break;
                     }
                 }
-                if (!closingTagFound) {
+                if (!closingTagFound) { 
                     modifiedName += '<';
                     continue;
                 }
@@ -51,8 +44,11 @@ public class AnvilListener implements Listener {
                 } else if (config.isFont(colorTag)) {
                     modifiedName += convertColor(config.getFont(colorTag));
                     i = closingTag;
-                } else if (config.isCustomColor(colorTag)) {
-                    //logger.info("custom color recognised");
+                } else if (config.isShortFont(colorTag)) {
+                    modifiedName += convertColor(colorTag);
+                    i = closingTag;
+                }else if (config.isCustomColor(colorTag)) {
+                    //System.out.println("custom color recognised");
                     modifiedName += convertColor(config.getColor(colorTag));
                     i = closingTag;
                 } else if (config.isDefaultColor(colorTag)) {
@@ -74,7 +70,7 @@ public class AnvilListener implements Listener {
     boolean isRGB(String tagToCheck){
         if(tagToCheck.charAt(0) == '<' && tagToCheck.charAt(1) == '#' && tagToCheck.charAt(8) == '>'){
             String colorCode = "0123456789abcdef";
-            for(int i = 2; i<8; i++){
+            for(int i = 2; i < 8; i++){
                 if(!(colorCode.contains(String.valueOf(tagToCheck.charAt(i))))){
                     return false;
                 }

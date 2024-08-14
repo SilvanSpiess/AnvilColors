@@ -9,4 +9,4 @@ commands:
   ColorCodes:
     description: Showing all Colorcodes
     aliases: [colorcodes]
-    usage: do /colorcode for all usages
+    usage: do /colorcodes for all usages

@@ -17,13 +17,13 @@ public class CommandListener implements CommandExecutor {
     ColorConfig config;
     final AnvilColor plugin;
 
-    public CommandListener(AnvilColor plugin, ColorConfig config){
+    public CommandListener(AnvilColor plugin, ColorConfig config) {
         this.config = config;
         this.plugin = plugin;
     }
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args){
-        if (label.equalsIgnoreCase("colorcodes")){
+        if (label.equalsIgnoreCase("anvilcolors")){
             if(commandSender instanceof Player){
                 Audience player = (Audience) commandSender;
                 commandSender.sendMessage("§bThe following§r §5c§9o§bl§ao§eu§6r§cs §bare available:§r");
@@ -45,6 +45,7 @@ public class CommandListener implements CommandExecutor {
         }
         return false;
     }
+
     public Component getDisplayText1() {        
         var mm = MiniMessage.miniMessage();
         Component parsed = mm.deserialize("<#"+config.getColorDict().get("yellow")+">"+"yellow"+"</#"+config.getColorDict().get("yellow")+"> " + "<#"+config.getColorDict().get("orange")+">"+"orange"+"</#"+config.getColorDict().get("orange")+"> " + "<#"+config.getColorDict().get("red")+">"+"red"+"</#"+config.getColorDict().get("red")+">");
@@ -72,7 +73,6 @@ public class CommandListener implements CommandExecutor {
     }
     public Component getDisplayText6() {        
         var mm = MiniMessage.miniMessage();
-        //Component parsed = mm.deserialize("<r><b>"+"bold"+"</b> " + "<i>"+"italic"+"</i> " + "<u>"+"underlined"+"</u> " + "<st>"+"strikethrough"+"</st>" + "<r>");
         Component parsed = mm.deserialize("<reset><b>bold</b> " + "<i>italic</i> " + "<u>underlined</u> " + "<st>strikethrough</st> " + "<reset><i>obf-></i> <obf>obf</obf>"); 
         
         return parsed;        

@@ -6,7 +6,6 @@ version: 1.0.1+mc1.19.3
 api-version: 1.19
 
 commands:
-  ColorCodes:
+  anvilcolors:
     description: Showing all Colorcodes
-    aliases: [colorcodes]
-    usage: do /colorcode for all usages
+    usage: do /anvilcolors for all usages
